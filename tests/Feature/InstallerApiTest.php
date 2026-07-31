@@ -1,6 +1,7 @@
 <?php
 
 use Webkul\BusinessPreset\Database\Seeders\BusinessPresetSeeder;
+use Webkul\BusinessPreset\Helpers\PresetRegistry;
 use Webkul\ThemeManager\Database\Seeders\ThemeAndTemplateSeeder;
 
 // ── Installer API Integration Tests ──
@@ -90,7 +91,7 @@ test('all preset codes match between registry and API', function () {
 
     $apiCodes = collect($response->json('data'))->pluck('code')->toArray();
 
-    $registry = app(\Webkul\BusinessPreset\Helpers\PresetRegistry::class);
+    $registry = app(PresetRegistry::class);
     $registryCodes = array_keys($registry->all());
 
     sort($apiCodes);

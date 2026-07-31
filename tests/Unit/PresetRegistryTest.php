@@ -1,7 +1,7 @@
 <?php
 
-use Webkul\BusinessPreset\Helpers\PresetRegistry;
 use Webkul\BusinessPreset\Contracts\BusinessPreset as BusinessPresetContract;
+use Webkul\BusinessPreset\Helpers\PresetRegistry;
 
 // ── PresetRegistry Tests ──
 

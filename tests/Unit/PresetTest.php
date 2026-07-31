@@ -1,15 +1,15 @@
 <?php
 
 use Webkul\BusinessPreset\Contracts\BusinessPreset as BusinessPresetContract;
-use Webkul\BusinessPreset\Presets\FashionPreset;
-use Webkul\BusinessPreset\Presets\ElectronicsPreset;
-use Webkul\BusinessPreset\Presets\GroceryPreset;
 use Webkul\BusinessPreset\Presets\BeautyPreset;
-use Webkul\BusinessPreset\Presets\RestaurantPreset;
-use Webkul\BusinessPreset\Presets\DigitalPreset;
-use Webkul\BusinessPreset\Presets\MarketplacePreset;
-use Webkul\BusinessPreset\Presets\ServicesPreset;
 use Webkul\BusinessPreset\Presets\CustomPreset;
+use Webkul\BusinessPreset\Presets\DigitalPreset;
+use Webkul\BusinessPreset\Presets\ElectronicsPreset;
+use Webkul\BusinessPreset\Presets\FashionPreset;
+use Webkul\BusinessPreset\Presets\GroceryPreset;
+use Webkul\BusinessPreset\Presets\MarketplacePreset;
+use Webkul\BusinessPreset\Presets\RestaurantPreset;
+use Webkul\BusinessPreset\Presets\ServicesPreset;
 
 // ── All presets implement the contract ──
 

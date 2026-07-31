@@ -5,6 +5,7 @@ namespace Webkul\BusinessPreset\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Webkul\BusinessPreset\Helpers\PresetRegistry;
+use Webkul\BusinessPreset\Http\Controllers\Admin\PresetController;
 use Webkul\BusinessPreset\Http\Controllers\InstallerApiController;
 use Webkul\BusinessPreset\Presets\BeautyPreset;
 use Webkul\BusinessPreset\Presets\CustomPreset;
@@ -57,6 +58,10 @@ class BusinessPresetServiceProvider extends ServiceProvider
             dirname(__DIR__).'/Resources/lang', 'business_preset'
         );
 
+        $this->loadViewsFrom(
+            dirname(__DIR__).'/Resources/views', 'business_preset'
+        );
+
         $this->publishes([
             dirname(__DIR__).'/Config/presets.php' => config_path('business_presets.php'),
         ], 'business-preset-config');
@@ -66,6 +71,25 @@ class BusinessPresetServiceProvider extends ServiceProvider
         ], 'business-preset-lang');
 
         $this->registerInstallerApiRoutes();
+        $this->registerAdminRoutes();
+    }
+
+    /**
+     * Register admin routes for preset management.
+     */
+    protected function registerAdminRoutes(): void
+    {
+        Route::group([
+            'prefix' => config('app.admin_url'),
+            'middleware' => ['web', 'admin'],
+        ], function () {
+            Route::prefix('satora')->group(function () {
+                Route::get('presets', [PresetController::class, 'index'])
+                    ->name('admin.satora.presets.index');
+                Route::post('presets/apply', [PresetController::class, 'apply'])
+                    ->name('admin.satora.presets.apply');
+            });
+        });
     }
 
     /**

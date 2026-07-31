@@ -1,10 +1,10 @@
 <?php
 
-use Webkul\BusinessPreset\Helpers\PresetRegistry;
-use Webkul\BusinessPreset\Helpers\PresetApplier;
-use Webkul\BusinessPreset\Database\Seeders\BusinessPresetSeeder;
-use Webkul\ThemeManager\Database\Seeders\ThemeAndTemplateSeeder;
 use Illuminate\Support\Facades\DB;
+use Webkul\BusinessPreset\Database\Seeders\BusinessPresetSeeder;
+use Webkul\BusinessPreset\Helpers\PresetApplier;
+use Webkul\BusinessPreset\Helpers\PresetRegistry;
+use Webkul\ThemeManager\Database\Seeders\ThemeAndTemplateSeeder;
 
 // ── PresetApplier Integration Tests ──
 
