@@ -49,7 +49,7 @@ test('registry toArray returns array of arrays', function () {
 
 test('each registry preset returns valid theme and template', function () {
     $validThemes = ['minimal-luxury', 'modern-dark', 'colorful'];
-    $validTemplates = ['fashion', 'electronics', 'grocery', 'general'];
+    $validTemplates = ['fashion', 'electronics', 'grocery', 'general', 'furniture'];
 
     foreach ($this->registry->all() as $preset) {
         expect($preset->getRecommendedTheme())->toBeIn($validThemes);
