@@ -12,16 +12,12 @@ use Webkul\BusinessPreset\Presets\CustomPreset;
 use Webkul\BusinessPreset\Presets\DigitalPreset;
 use Webkul\BusinessPreset\Presets\ElectronicsPreset;
 use Webkul\BusinessPreset\Presets\FashionPreset;
+use Webkul\BusinessPreset\Presets\FurniturePreset;
 use Webkul\BusinessPreset\Presets\GroceryPreset;
 use Webkul\BusinessPreset\Presets\MarketplacePreset;
-use Webkul\BusinessPreset\Presets\RestaurantPreset;
-use Webkul\BusinessPreset\Presets\ServicesPreset;
 
 class BusinessPresetServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
     public function register(): void
     {
         $this->mergeConfigFrom(
@@ -36,10 +32,9 @@ class BusinessPresetServiceProvider extends ServiceProvider
                 ElectronicsPreset::class,
                 GroceryPreset::class,
                 BeautyPreset::class,
-                RestaurantPreset::class,
                 DigitalPreset::class,
+                FurniturePreset::class,
                 MarketplacePreset::class,
-                ServicesPreset::class,
                 CustomPreset::class,
             ]);
 
@@ -47,64 +42,34 @@ class BusinessPresetServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
         $this->loadMigrationsFrom(dirname(__DIR__).'/Database/Migrations');
-
-        $this->loadTranslationsFrom(
-            dirname(__DIR__).'/Resources/lang', 'business_preset'
-        );
-
-        $this->loadViewsFrom(
-            dirname(__DIR__).'/Resources/views', 'business_preset'
-        );
-
-        $this->publishes([
-            dirname(__DIR__).'/Config/presets.php' => config_path('business_presets.php'),
-        ], 'business-preset-config');
-
-        $this->publishes([
-            dirname(__DIR__).'/Resources/lang' => resource_path('lang/vendor/business_preset'),
-        ], 'business-preset-lang');
+        $this->loadTranslationsFrom(dirname(__DIR__).'/Resources/lang', 'business_preset');
+        $this->loadViewsFrom(dirname(__DIR__).'/Resources/views', 'business_preset');
+        $this->publishes([dirname(__DIR__).'/Config/presets.php' => config_path('business_presets.php')]);
 
         $this->registerInstallerApiRoutes();
         $this->registerAdminRoutes();
     }
 
-    /**
-     * Register admin routes for preset management.
-     */
-    protected function registerAdminRoutes(): void
+    protected function registerInstallerApiRoutes(): void
     {
-        Route::group([
-            'prefix' => config('app.admin_url'),
-            'middleware' => ['web', 'admin'],
-        ], function () {
-            Route::prefix('satora')->group(function () {
-                Route::get('presets', [PresetController::class, 'index'])
-                    ->name('admin.satora.presets.index');
-                Route::post('presets/apply', [PresetController::class, 'apply'])
-                    ->name('admin.satora.presets.apply');
-            });
+        Route::group(['prefix' => 'install/api/satora', 'middleware' => 'web'], function () {
+            Route::get('presets', [InstallerApiController::class, 'presets']);
+            Route::get('themes', [InstallerApiController::class, 'themes']);
+            Route::get('templates', [InstallerApiController::class, 'templates']);
+            Route::get('templates/{templateCode}/themes', [InstallerApiController::class, 'compatibleThemes']);
         });
     }
 
-    /**
-     * Register installer API routes for preset/theme/template selection.
-     */
-    protected function registerInstallerApiRoutes(): void
+    protected function registerAdminRoutes(): void
     {
-        Route::prefix('install/api/satora')
-            ->middleware(['web', 'installer_file_session', 'installer_locale'])
-            ->group(function () {
-                Route::get('presets', [InstallerApiController::class, 'presets']);
-                Route::get('themes', [InstallerApiController::class, 'themes']);
-                Route::get('templates', [InstallerApiController::class, 'templates']);
-                Route::get('themes/compatible/{templateCode}', [InstallerApiController::class, 'compatibleThemes']);
-                Route::get('templates/compatible/{themeCode}', [InstallerApiController::class, 'compatibleTemplates']);
-            });
+        Route::group(['prefix' => config('app.admin_url'), 'middleware' => ['web', 'admin']], function () {
+            Route::get('settings/presets', [PresetController::class, 'index'])
+                ->name('admin.satora.presets.index');
+            Route::post('settings/presets/apply', [PresetController::class, 'apply'])
+                ->name('admin.satora.presets.apply');
+        });
     }
 }

@@ -113,7 +113,7 @@ test('All presets toArray returns required keys', function () use ($allPresets) 
     }
 });
 
-test('All 9 presets have unique codes', function () use ($allPresets) {
+test('All 8 presets have unique codes', function () use ($allPresets) {
     $codes = array_map(fn ($c) => (new $c)->getCode(), $allPresets);
     expect(count(array_unique($codes)))->toBe(9);
 });

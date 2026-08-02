@@ -9,8 +9,8 @@ beforeEach(function () {
     $this->registry = app(PresetRegistry::class);
 });
 
-test('registry contains all 9 presets', function () {
-    expect($this->registry->count())->toBe(9);
+test('registry contains all 8 presets', function () {
+    expect($this->registry->count())->toBe(8);
 });
 
 test('registry returns preset by code', function () {
@@ -33,7 +33,7 @@ test('registry has method works', function () {
 test('registry all returns array of presets', function () {
     $all = $this->registry->all();
     expect($all)->toBeArray();
-    expect(count($all))->toBe(9);
+    expect(count($all))->toBe(8);
     foreach ($all as $preset) {
         expect($preset)->toBeInstanceOf(BusinessPresetContract::class);
     }
@@ -42,7 +42,7 @@ test('registry all returns array of presets', function () {
 test('registry toArray returns array of arrays', function () {
     $array = $this->registry->toArray();
     expect($array)->toBeArray();
-    expect(count($array))->toBe(9);
+    expect(count($array))->toBe(8);
     // toArray returns associative array keyed by preset code
     expect($array['fashion'])->toHaveKeys(['code', 'name']);
 });
