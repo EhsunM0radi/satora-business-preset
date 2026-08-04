@@ -8,14 +8,8 @@ use Webkul\BusinessPreset\Contracts\BusinessPresetModel;
 
 class BusinessPreset extends Model implements BusinessPresetContract, BusinessPresetModel
 {
-    /**
-     * The table associated with the model.
-     */
     protected $table = 'satora_business_presets';
 
-    /**
-     * The attributes that are mass assignable.
-     */
     protected $fillable = [
         'code',
         'name',
@@ -27,6 +21,13 @@ class BusinessPreset extends Model implements BusinessPresetContract, BusinessPr
         'sample_products',
         'default_pages',
         'navigation',
+        'attributes',
+        'attribute_family',
+        'email_templates',
+        'widgets',
+        'banners',
+        'roles',
+        'product_types',
         'icon',
         'preview_image',
         'is_active',
@@ -40,9 +41,18 @@ class BusinessPreset extends Model implements BusinessPresetContract, BusinessPr
         'sample_products' => 'array',
         'default_pages' => 'array',
         'navigation' => 'array',
+        'attributes' => 'array',
+        'attribute_family' => 'array',
+        'email_templates' => 'array',
+        'widgets' => 'array',
+        'banners' => 'array',
+        'roles' => 'array',
+        'product_types' => 'array',
         'metadata' => 'array',
         'is_active' => 'boolean',
     ];
+
+    // ─── Standard methods ────────────────────────────────────
 
     public function getCode(): string
     {
@@ -94,6 +104,48 @@ class BusinessPreset extends Model implements BusinessPresetContract, BusinessPr
         return $this->navigation ?? [];
     }
 
+    // ─── Extended methods (Phase 1) ──────────────────────────
+
+    public function getProductAttributes(): array
+    {
+        return $this->attributes ?? [];
+    }
+
+    public function getAttributeFamily(): array
+    {
+        return $this->attribute_family ?? [];
+    }
+
+    public function getEmailTemplates(): array
+    {
+        return $this->email_templates ?? [];
+    }
+
+    public function getWidgets(): array
+    {
+        return $this->widgets ?? [];
+    }
+
+    public function getBanners(): array
+    {
+        return $this->banners ?? [];
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles ?? [];
+    }
+
+    public function getPermissions(): array
+    {
+        return $this->metadata['permissions'] ?? [];
+    }
+
+    public function getProductTypes(): array
+    {
+        return $this->product_types ?? ['simple'];
+    }
+
     public function toArray(): array
     {
         return [
@@ -109,6 +161,9 @@ class BusinessPreset extends Model implements BusinessPresetContract, BusinessPr
             'recommended_settings' => $this->recommended_settings,
             'default_pages' => $this->default_pages,
             'navigation' => $this->navigation,
+            'product_attributes' => $this->attributes,
+            'attribute_family' => $this->attribute_family,
+            'product_types' => $this->product_types,
         ];
     }
 }

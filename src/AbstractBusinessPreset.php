@@ -26,6 +26,22 @@ abstract class AbstractBusinessPreset implements BusinessPresetContract
 
     protected array $navigation = [];
 
+    protected array $productAttributes = [];
+
+    protected array $attributeFamily = [];
+
+    protected array $emailTemplates = [];
+
+    protected array $widgets = [];
+
+    protected array $banners = [];
+
+    protected array $roles = [];
+
+    protected array $permissions = [];
+
+    protected array $productTypes = ['simple'];
+
     protected ?string $icon = null;
 
     protected ?string $previewImage = null;
@@ -80,6 +96,46 @@ abstract class AbstractBusinessPreset implements BusinessPresetContract
         return $this->navigation;
     }
 
+    public function getProductAttributes(): array
+    {
+        return $this->productAttributes;
+    }
+
+    public function getAttributeFamily(): array
+    {
+        return $this->attributeFamily;
+    }
+
+    public function getEmailTemplates(): array
+    {
+        return $this->emailTemplates;
+    }
+
+    public function getWidgets(): array
+    {
+        return $this->widgets;
+    }
+
+    public function getBanners(): array
+    {
+        return $this->banners;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function getPermissions(): array
+    {
+        return $this->permissions;
+    }
+
+    public function getProductTypes(): array
+    {
+        return $this->productTypes;
+    }
+
     public function toArray(): array
     {
         return [
@@ -94,6 +150,9 @@ abstract class AbstractBusinessPreset implements BusinessPresetContract
             'recommended_settings' => $this->recommendedSettings,
             'default_pages' => $this->defaultPages,
             'navigation' => $this->navigation,
+            'product_attributes' => $this->productAttributes,
+            'attribute_family' => $this->attributeFamily,
+            'product_types' => $this->productTypes,
         ];
     }
 }
